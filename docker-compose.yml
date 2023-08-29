@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  telegram-bot:
+    image: ramses31415/apartment:serbia
+    working_dir: /apart_bot
+    restart: always
+    command: bash -c "python main.py"
+    depends_on:
+      - redis
+    volumes:
+      - sqlite_data:/app/db
+    networks:
+      - SerbiaApartments_bot
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - SerbiaApartments_bot
+
+networks:
+  SerbiaApartments_bot:
+
+volumes:
+  sqlite_data:
